@@ -18,11 +18,11 @@ source = '/Library/Developer/CommandLineTools/usr/include/swift/module.modulemap
 PYOVERLAY
 SDK_DIR="$(xcrun --show-sdk-path)"
 if [ -d /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk ]; then SDK_DIR=/Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk; fi
-OVERLAY_FLAGS=()
+set --
 if [ -f /Library/Developer/CommandLineTools/usr/include/swift/module.modulemap ] && [ -d /Library/Developer/CommandLineTools/SDKs/MacOSX14.5.sdk ]; then
-  OVERLAY_FLAGS=(-vfsoverlay "$BUILD_DIR/overlay.json" -Xcc -ivfsoverlay -Xcc "$BUILD_DIR/overlay.json")
+  set -- -vfsoverlay "$BUILD_DIR/overlay.json" -Xcc -ivfsoverlay -Xcc "$BUILD_DIR/overlay.json"
 fi
-swiftc -sdk "$SDK_DIR" "${OVERLAY_FLAGS[@]}" -O -swift-version 5 -target arm64-apple-macosx13.0 -module-cache-path "$BUILD_DIR/module-cache" -framework SwiftUI -framework AppKit -framework NaturalLanguage "$SOURCE_DIR/Core.swift" "$SOURCE_DIR/SubtitleProcessing.swift" "$SOURCE_DIR/RecognitionQuality.swift" "$SOURCE_DIR/Vocabulary.swift" "$SOURCE_DIR/CaptionExport.swift" "$SOURCE_DIR/App.swift" "$SOURCE_DIR/SelfTests.swift" -o "$BUILD_DIR/SubtitleStudio"
+swiftc -sdk "$SDK_DIR" "$@" -O -swift-version 5 -target arm64-apple-macosx13.0 -module-cache-path "$BUILD_DIR/module-cache" -framework SwiftUI -framework AppKit -framework NaturalLanguage "$SOURCE_DIR/Core.swift" "$SOURCE_DIR/SubtitleProcessing.swift" "$SOURCE_DIR/RecognitionQuality.swift" "$SOURCE_DIR/Vocabulary.swift" "$SOURCE_DIR/CaptionExport.swift" "$SOURCE_DIR/App.swift" "$SOURCE_DIR/SelfTests.swift" -o "$BUILD_DIR/SubtitleStudio"
 NAME="字幕转写"
 ID="org.subtitle-studio.local"
   APP_DIR="$DEST_DIR/$NAME.app"
