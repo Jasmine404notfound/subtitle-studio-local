@@ -1,0 +1,6 @@
+# Known baseline, not a complete transitive lockfile. Apple Silicon / Python 3.12.
+mlx==0.32.3
+mlx-whisper==0.4.3
+mlx-lm==0.26.3
+transformers==4.57.6
+webrtcvad-wheels==2.0.14.post1
